@@ -1,0 +1,43 @@
+// ──────────────────────────────────────────────
+// Global Layout Utilities
+// Structural constraints shared across pages.
+// ──────────────────────────────────────────────
+
+@use '../abstracts' as *;
+
+.container {
+  width: 100%;
+  max-width: $breakpoint-xl;
+  margin-inline: auto;
+  padding-inline: $spacing-md;
+
+  @include respond-to('lg') {
+    padding-inline: $spacing-xl;
+  }
+}
+
+.section {
+  padding-block: $spacing-3xl;
+
+  @include respond-to('md') {
+    padding-block: $spacing-4xl;
+  }
+}
+
+// Skip-to-content link for keyboard/screen-reader users
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: $spacing-md;
+  z-index: $z-toast;
+  padding: $spacing-xs $spacing-md;
+  background: $color-primary;
+  color: white;
+  border-radius: $radius-md;
+  font-weight: $font-weight-medium;
+  transition: top $transition-fast;
+
+  &:focus {
+    top: $spacing-md;
+  }
+}

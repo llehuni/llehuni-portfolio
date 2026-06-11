@@ -1,0 +1,27 @@
+// ──────────────────────────────────────────────
+// Functions
+// Pure SCSS helpers — no CSS output.
+// ──────────────────────────────────────────────
+
+@use 'sass:math';
+@use 'variables' as *;
+
+/// Multiply the base spacing unit.
+/// Usage: space(4) → 1rem (4 × 0.25rem)
+@function space($multiplier) {
+  @return $spacing-unit * $multiplier;
+}
+
+/// Fluid typography using CSS clamp().
+/// Produces a value that scales linearly between $min and $max
+/// across the viewport range $min-vw → $max-vw.
+@function fluid-type(
+  $min,
+  $max,
+  $min-vw: 320px,
+  $max-vw: 1280px
+) {
+  $slope: math.div($max - $min, $max-vw - $min-vw);
+  $intercept: $min - $slope * $min-vw;
+  @return clamp(#{$min}, #{$intercept} + #{$slope * 100vw}, #{$max});
+}

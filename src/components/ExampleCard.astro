@@ -1,0 +1,55 @@
+---
+// Example component demonstrating scoped SCSS with abstracts
+---
+
+<section class="example-card">
+	<h3 class="example-card__title">Composant Exemple</h3>
+	<p class="example-card__text">
+		Ce composant utilise les variables et mixins via
+		<code>@use</code> dans un bloc <code>&lt;style lang="scss"&gt;</code> scopé.
+	</p>
+</section>
+
+<!--
+  Scoped styles — Astro automatically scopes these to this component.
+  Variables and mixins are available via @use, but produce no global CSS.
+-->
+<style lang="scss">
+	@use '../styles/abstracts' as *;
+
+	.example-card {
+		@include glass(0.06, 12px);
+		padding: $spacing-lg;
+		border: 1px solid rgba($color-primary-light, 0.15);
+		border-radius: $radius-lg;
+		transition: transform $transition-base, box-shadow $transition-base;
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+		}
+
+		&__title {
+			@include heading($font-size-xl, $font-weight-semibold);
+			margin-bottom: $spacing-xs;
+			color: $color-text;
+		}
+
+		&__text {
+			@include body-text($font-size-sm);
+			color: $color-text-muted;
+			margin-bottom: 0;
+
+			code {
+				background: rgba($color-primary, 0.15);
+				padding: 2px 6px;
+				border-radius: $radius-sm;
+				font-size: $font-size-xs;
+			}
+		}
+
+		@include respond-to('md') {
+			padding: $spacing-xl;
+		}
+	}
+</style>

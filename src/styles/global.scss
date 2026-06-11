@@ -1,0 +1,17 @@
+// ╔══════════════════════════════════════════════╗
+// ║  Global Styles — Entry Point                 ║
+// ║  Imported once in Layout.astro.              ║
+// ║  Contains ONLY rules that must apply         ║
+// ║  globally (reset, base, layout).             ║
+// ║  Component styles stay scoped in .astro.     ║
+// ╚══════════════════════════════════════════════╝
+
+// 1. Base — Reset + Global typography
+@use 'base';
+
+// 2. Layout — Structural utilities (.container, .section, .skip-link)
+@use 'layout';
+
+// NOTE: abstracts/ (variables, mixins, functions) are NOT imported here.
+// They produce no CSS output — they are consumed directly by components
+// via @use '../styles/abstracts' as *;

@@ -1,0 +1,56 @@
+// ──────────────────────────────────────────────
+// Global Typography
+// Base typographic styles applied site-wide.
+// ──────────────────────────────────────────────
+
+@use '../abstracts' as *;
+
+body {
+  @include body-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-sans;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: -0.02em;
+  color: $color-text;
+}
+
+h1 { font-size: $font-size-4xl; }
+h2 { font-size: $font-size-3xl; }
+h3 { font-size: $font-size-2xl; }
+h4 { font-size: $font-size-xl; }
+h5 { font-size: $font-size-lg; }
+h6 { font-size: $font-size-md; }
+
+p {
+  margin-bottom: $spacing-md;
+  color: $color-text-muted;
+}
+
+strong {
+  font-weight: $font-weight-semibold;
+}
+
+small {
+  font-size: $font-size-sm;
+}
+
+code,
+kbd,
+samp {
+  font-family: $font-family-mono;
+  font-size: 0.9em;
+}
+
+// Selection highlight
+::selection {
+  background-color: rgba($color-primary, 0.3);
+  color: $color-text;
+}

@@ -1,0 +1,93 @@
+// ──────────────────────────────────────────────
+// Design Tokens
+// Single source of truth for all design values.
+// ──────────────────────────────────────────────
+
+// ── Colors ───────────────────────────────────
+$color-primary: hsl(245, 100%, 60%) !default;
+$color-primary-light: hsl(245, 100%, 72%) !default;
+$color-primary-dark: hsl(245, 100%, 48%) !default;
+
+$color-accent: hsl(280, 82%, 62%) !default;
+$color-accent-light: hsl(280, 82%, 74%) !default;
+
+$color-neutral-50: hsl(220, 20%, 97%) !default;
+$color-neutral-100: hsl(220, 18%, 93%) !default;
+$color-neutral-200: hsl(220, 16%, 84%) !default;
+$color-neutral-300: hsl(220, 14%, 70%) !default;
+$color-neutral-400: hsl(220, 12%, 55%) !default;
+$color-neutral-500: hsl(220, 10%, 40%) !default;
+$color-neutral-600: hsl(220, 12%, 28%) !default;
+$color-neutral-700: hsl(220, 14%, 20%) !default;
+$color-neutral-800: hsl(220, 18%, 13%) !default;
+$color-neutral-900: hsl(220, 22%, 8%) !default;
+
+$color-success: hsl(152, 60%, 44%) !default;
+$color-warning: hsl(38, 92%, 56%) !default;
+$color-error: hsl(0, 72%, 56%) !default;
+
+$color-bg: $color-neutral-900 !default;
+$color-surface: $color-neutral-800 !default;
+$color-text: $color-neutral-50 !default;
+$color-text-muted: $color-neutral-400 !default;
+
+// ── Typography ───────────────────────────────
+$font-family-sans: 'Inter', 'Roboto', 'Helvetica Neue', Arial, sans-serif !default;
+$font-family-mono: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', ui-monospace, monospace !default;
+
+$font-size-xs: 0.75rem !default;   // 12px
+$font-size-sm: 0.875rem !default;  // 14px
+$font-size-base: 1rem !default;    // 16px
+$font-size-md: 1.125rem !default;  // 18px
+$font-size-lg: 1.25rem !default;   // 20px
+$font-size-xl: 1.5rem !default;    // 24px
+$font-size-2xl: 2rem !default;     // 32px
+$font-size-3xl: 2.5rem !default;   // 40px
+$font-size-4xl: 3rem !default;     // 48px
+
+$font-weight-regular: 400 !default;
+$font-weight-medium: 500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
+
+$line-height-tight: 1.2 !default;
+$line-height-base: 1.6 !default;
+$line-height-loose: 1.8 !default;
+
+// ── Spacing ──────────────────────────────────
+$spacing-unit: 0.25rem !default; // 4px base unit
+
+$spacing-xs: $spacing-unit * 2 !default;   // 8px
+$spacing-sm: $spacing-unit * 3 !default;   // 12px
+$spacing-md: $spacing-unit * 4 !default;   // 16px
+$spacing-lg: $spacing-unit * 6 !default;   // 24px
+$spacing-xl: $spacing-unit * 8 !default;   // 32px
+$spacing-2xl: $spacing-unit * 12 !default; // 48px
+$spacing-3xl: $spacing-unit * 16 !default; // 64px
+$spacing-4xl: $spacing-unit * 24 !default; // 96px
+
+// ── Breakpoints ──────────────────────────────
+$breakpoint-sm: 576px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 1024px !default;
+$breakpoint-xl: 1280px !default;
+$breakpoint-2xl: 1536px !default;
+
+// ── Transitions ──────────────────────────────
+$transition-fast: 150ms ease !default;
+$transition-base: 250ms ease !default;
+$transition-slow: 400ms ease !default;
+
+// ── Z-Index Scale ────────────────────────────
+$z-dropdown: 100 !default;
+$z-sticky: 200 !default;
+$z-overlay: 300 !default;
+$z-modal: 400 !default;
+$z-toast: 500 !default;
+
+// ── Border Radius ────────────────────────────
+$radius-sm: 4px !default;
+$radius-md: 8px !default;
+$radius-lg: 12px !default;
+$radius-xl: 16px !default;
+$radius-full: 9999px !default;

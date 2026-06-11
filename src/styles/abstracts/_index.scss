@@ -1,0 +1,5 @@
+// Barrel — forward everything so consumers can do:
+//   @use 'abstracts' as *;
+@forward 'variables';
+@forward 'functions';
+@forward 'mixins';
