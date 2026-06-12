@@ -5,12 +5,19 @@ import '../styles/global.scss';
 interface Props {
 	title: string;
 	description?: string;
+	ogImage?: string;
+	canonical?: string;
 }
 
 const {
 	title,
-	description = 'Portfolio personnel de Llehuni — projets, parcours et compétences techniques.'
+	description = 'Portfolio personnel de Llehuni — projets, parcours et compétences techniques.',
+	ogImage,
+	canonical
 } = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site || 'https://llehuni.dev').href;
+const ogImageURL = ogImage || new URL('/_astro/llehuni-picture.jpg', Astro.site || 'https://llehuni.dev').href;
 ---
 
 <!doctype html>
@@ -24,6 +31,26 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<title>{title}</title>
+
+		<!-- Robots & Indexing -->
+		<meta name="robots" content="index, follow" />
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageURL} />
+		<meta property="og:locale" content="fr_FR" />
+		<meta property="og:site_name" content="Llehuni Portfolio" />
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={canonicalURL} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta property="twitter:image" content={ogImageURL} />
 	</head>
 	<body>
 		<slot />

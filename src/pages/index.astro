@@ -1,33 +1,106 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import hauteSel from '../assets/img/haute-sel.jpeg';
 import llehuniPicture from '../assets/img/llehuni-picture.jpg';
 import instagramBadge from '../assets/img/icons8-instagram-verification-badge-100.png';
+
+const siteURL = Astro.site || 'https://llehuni.dev';
+const canonicalURL = new URL(Astro.url.pathname, siteURL).href;
+const ogImageURL = new URL(llehuniPicture.src, siteURL).href;
+const bannerImageURL = new URL(hauteSel.src, siteURL).href;
+
+const schema = JSON.stringify({
+	"@context": "https://schema.org",
+	"@type": "ProfilePage",
+	"mainEntity": {
+		"@type": "Person",
+		"name": "LaGrace Lehuni",
+		"alternateName": [
+			"llehuni",
+			"llehunix",
+			"LagraceLlehuni",
+			"llehuni lagrace",
+			"llehuni LaGrace",
+			"LaGrace",
+			"Lehuni",
+			"LaGrace Lehuni",
+		],
+		"image": ogImageURL,
+		"jobTitle": "Software Engineer",
+		"worksFor": {
+			"@type": "Organization",
+			"name": "Haute Sel"
+		},
+		"address": {
+			"@type": "PostalAddress",
+			"addressLocality": "Kinshasa",
+			"addressCountry": "CD"
+		},
+		"sameAs": [
+			"https://github.com/llehuni",
+			"https://www.linkedin.com/in/lagrace-lehuni-9366052a5"
+		],
+		"knowsAbout": [
+			"HTML",
+			"CSS",
+			"JavaScript",
+			"React",
+			"Angular",
+			"PHP",
+			"Node.js",
+			"Python",
+			"SQL",
+			"Git"
+		]
+	}
+});
 ---
 
-<Layout title="Profile - LaGrace Lehuni">
+<Layout title="Profile - LaGrace Lehuni" canonical={canonicalURL} ogImage={ogImageURL}>
+	<!-- Schema.org Structured Data for Search Engines & LLMs -->
+	<script type="application/ld+json" set:html={schema} />
+
 	<main id="main-content">
 		<div class="profile-card">
 			<div class="banner">
 				<div class="banner-img">
-					<img src={hauteSel.src} alt="banner image" />
+					<Image 
+						src={hauteSel} 
+						alt="Bannière représentative de l'entreprise Haute Sel" 
+						loading="eager" 
+						fetchpriority="high"
+					/>
 				</div>
 			</div>
 
 			<div class="main-content">
 				<div class="avatar-wrapper">
-					<img src={llehuniPicture.src} alt="LaGrace Lehuni" class="avatar" />
+					<Image 
+						src={llehuniPicture} 
+						alt="Photo de profil officielle de LaGrace Lehuni" 
+						class="avatar" 
+						loading="eager"
+					/>
 					<div class="verified-badge">
-						<img src={instagramBadge.src} alt="verification badge" />
+						<Image 
+							src={instagramBadge} 
+							alt="Badge de vérification officiel" 
+							loading="lazy"
+						/>
 					</div>
 
 					<div class="avatar-overlay">
-						<img src={llehuniPicture.src} alt="LaGrace Lehuni" />
+						<Image 
+							src={llehuniPicture} 
+							alt="Agrandissement du portrait de LaGrace Lehuni" 
+							loading="lazy"
+						/>
 					</div>
 				</div>
 
 				<div class="profile-header">
-					<h2 class="user-name">LaGrace Lehuni <span class="star">★</span></h2>
+					<h1 class="user-name">LaGrace Lehuni <span class="star">★</span></h1>
 					<p class="user-role">Software Engineer <span>at</span> Haute Sel</p>
 				</div>
 
@@ -75,6 +148,7 @@ import instagramBadge from '../assets/img/icons8-instagram-verification-badge-10
 							class="info-link"
 							target="_blank"
 							rel="noopener noreferrer"
+							aria-label="Profil LinkedIn professionnel de LaGrace Lehuni (s'ouvre dans un nouvel onglet)"
 						>
 							in/lagrace-lehuni
 						</a>
@@ -86,6 +160,7 @@ import instagramBadge from '../assets/img/icons8-instagram-verification-badge-10
 							class="info-link"
 							target="_blank"
 							rel="noopener noreferrer"
+							aria-label="Profil GitHub de développeur de LaGrace Lehuni (s'ouvre dans un nouvel onglet)"
 						>
 							github/llehuni
 						</a>
