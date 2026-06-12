@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import hauteSel from '../assets/img/haute-sel.jpeg';
-import llehuniPicture from '../assets/img/llehuni-picture.jpg';
+import llehuniPicture from '../assets/img/llehuni_profile.png';
 import instagramBadge from '../assets/img/icons8-instagram-verification-badge-100.png';
 
 const siteURL = Astro.site || 'https://llehuni.dev';
@@ -55,6 +55,8 @@ const schema = JSON.stringify({
 		]
 	}
 });
+
+const year = new Date().getFullYear();
 ---
 
 <Layout title="Profile - LaGrace Lehuni" canonical={canonicalURL} ogImage={ogImageURL}>
@@ -64,14 +66,13 @@ const schema = JSON.stringify({
 	<main id="main-content">
 		<div class="profile-card">
 			<div class="banner">
-				<div class="banner-img">
-					<Image 
-						src={hauteSel} 
-						alt="Bannière représentative de l'entreprise Haute Sel" 
-						loading="eager" 
-						fetchpriority="high"
-					/>
-				</div>
+				<Image 
+					src={hauteSel} 
+					alt="Bannière représentative de l'entreprise Haute Sel" 
+					loading="eager" 
+					fetchpriority="high"
+					class="banner-img"
+				/>
 			</div>
 
 			<div class="main-content">
@@ -82,13 +83,12 @@ const schema = JSON.stringify({
 						class="avatar" 
 						loading="eager"
 					/>
-					<div class="verified-badge">
-						<Image 
-							src={instagramBadge} 
-							alt="Badge de vérification officiel" 
-							loading="lazy"
-						/>
-					</div>
+					<Image 
+						src={instagramBadge} 
+						alt="Badge de vérification officiel" 
+						loading="lazy"
+						class="verified-badge"
+					/>
 
 					<div class="avatar-overlay">
 						<Image 
@@ -170,7 +170,7 @@ const schema = JSON.stringify({
 		</div>
 
 		<footer class="footer">
-			<p>&copy; 2025 <strong>LaGrace Lehuni</strong>. All rights reserved.</p>
+			<p>&copy; {year} <strong>LaGrace Lehuni</strong>. All rights reserved.</p>
 		</footer>
 	</main>
 </Layout>
@@ -209,14 +209,17 @@ const schema = JSON.stringify({
 
 	.banner {
 		height: 160px;
-		padding: 5px;
+		margin: 5px;
+		border-radius: 10px;
 		overflow: hidden;
 		position: relative;
+		background-color: $profile-text-dark;
+		
 
 		.banner-img {
 			background-color: $profile-secondary-blue;
 			overflow: hidden;
-			display: flex;
+			display: none;
 			justify-content: center;
 			align-items: center;
 			border-radius: 10px;
@@ -224,7 +227,7 @@ const schema = JSON.stringify({
 			width: 100%;
 
 			img {
-				width: 50%;
+				width: 100%;
 			}
 		}
 	}
@@ -429,7 +432,7 @@ const schema = JSON.stringify({
 		color: #0a1a1a !important;
 		margin: 0;
 		padding: 40px 20px;
-		font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+		font-family: 'Figtree', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	}
 </style>
 
