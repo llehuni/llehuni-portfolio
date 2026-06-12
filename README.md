@@ -141,7 +141,7 @@ Le projet utilise le **7-1 Pattern** adapté aux conventions d'Astro :
 
 ## Licence
 
-MIT License — Copyright (c) 2026 Llehuni
+[MIT License](./LICENSE) — Copyright (c) 2026 Llehuni
 
 ---
 
