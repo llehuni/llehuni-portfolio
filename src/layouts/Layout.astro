@@ -1,19 +1,23 @@
 ---
-// Import global styles once — applies reset, typography, and layout utilities
+// src/layouts/Layout.astro
 import '../styles/global.scss';
+import GoogleFont from '../components/core/GoogleFont.astro';
+import Seo from '../components/core/Seo.astro';
 
 interface Props {
-	title: string;
-	description?: string;
-	ogImage?: string;
-	canonical?: string;
+    title: string;
+    description?: string;
+    ogImage?: string;
+    canonical?: string;
+    schema?: string; // Permet de remonter le schéma de index.astro vers Seo.astro
 }
 
 const {
-	title,
-	description = 'Portfolio personnel de Llehuni — projets, parcours et compétences techniques.',
-	ogImage,
-	canonical
+    title,
+    description = 'Portfolio personnel de Llehuni — projets, parcours et compétences techniques.',
+    ogImage,
+    canonical,
+    schema
 } = Astro.props;
 
 const canonicalURL = canonical || new URL(Astro.url.pathname, Astro.site || 'https://llehuni.dev').href;
@@ -22,41 +26,23 @@ const ogImageURL = ogImage || new URL('/_astro/llehuni-picture.jpg', Astro.site 
 
 <!doctype html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="description" content={description} />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-		<!-- Google Fonts - Figtree -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
-		<title>{title}</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
 
-		<!-- Robots & Indexing -->
-		<meta name="robots" content="index, follow" />
-		<link rel="canonical" href={canonicalURL} />
+        <Seo 
+            title={title}
+            description={description}
+            canonicalUrl={canonicalURL}
+            ogImageURL={ogImageURL}
+            schema={schema}
+        />
 
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={canonicalURL} />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:image" content={ogImageURL} />
-		<meta property="og:locale" content="fr_FR" />
-		<meta property="og:site_name" content="Llehuni Portfolio" />
-
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image" />
-		<meta property="twitter:url" content={canonicalURL} />
-		<meta property="twitter:title" content={title} />
-		<meta property="twitter:description" content={description} />
-		<meta property="twitter:image" content={ogImageURL} />
-	</head>
-	<body>
-		<slot />
-	</body>
+        <GoogleFont family="Figtree" weights="300..900" />
+    </head>
+    <body>
+        <slot />
+    </body>
 </html>

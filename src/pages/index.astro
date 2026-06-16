@@ -1,6 +1,10 @@
 ---
 import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
 import Layout from '../layouts/Layout.astro';
+
+import { profile, generateProfileSchema } from '../data/profile';
+
 import hauteSel from '../assets/img/haute-sel.jpeg';
 import llehuniPicture from '../assets/img/llehuni_profile.png';
 import instagramBadge from '../assets/img/icons8-instagram-verification-badge-100.png';
@@ -8,431 +12,393 @@ import instagramBadge from '../assets/img/icons8-instagram-verification-badge-10
 const siteURL = Astro.site || 'https://llehuni.dev';
 const canonicalURL = new URL(Astro.url.pathname, siteURL).href;
 const ogImageURL = new URL(llehuniPicture.src, siteURL).href;
-const bannerImageURL = new URL(hauteSel.src, siteURL).href;
 
-const schema = JSON.stringify({
-	"@context": "https://schema.org",
-	"@type": "ProfilePage",
-	"mainEntity": {
-		"@type": "Person",
-		"name": "LaGrace Lehuni",
-		"alternateName": [
-			"llehuni",
-			"llehunix",
-			"LagraceLlehuni",
-			"llehuni lagrace",
-			"llehuni LaGrace",
-			"LaGrace",
-			"Lehuni",
-			"LaGrace Lehuni",
-		],
-		"image": ogImageURL,
-		"jobTitle": "Software Engineer",
-		"worksFor": {
-			"@type": "Organization",
-			"name": "Haute Sel"
-		},
-		"address": {
-			"@type": "PostalAddress",
-			"addressLocality": "Kinshasa",
-			"addressCountry": "CD"
-		},
-		"sameAs": [
-			"https://github.com/llehuni",
-			"https://www.linkedin.com/in/lagrace-lehuni-9366052a5"
-		],
-		"knowsAbout": [
-			"HTML",
-			"CSS",
-			"JavaScript",
-			"React",
-			"Angular",
-			"PHP",
-			"Node.js",
-			"Python",
-			"SQL",
-			"Git"
-		]
-	}
-});
+const schema = generateProfileSchema(ogImageURL);
+
+const iconMap: Record<string, string> = {
+    'HTML': 'bx:bxl-html5',
+    'CSS': 'bx:bxl-css3',
+    'JavaScript': 'bx:bxl-javascript',
+    'React': 'bx:bxl-react',
+    'Angular': 'bx:bxl-angular',
+    'PHP': 'bx:bxl-php',
+    'Node.js': 'bx:bxl-nodejs',
+    'Python': 'bx:bxl-python',
+    'SQL': 'bx:bx-data',
+    'Git': 'bx:bxl-git'
+};
 
 const year = new Date().getFullYear();
 ---
 
-<Layout title="Profile - LaGrace Lehuni" canonical={canonicalURL} ogImage={ogImageURL}>
-	<!-- Schema.org Structured Data for Search Engines & LLMs -->
-	<script type="application/ld+json" set:html={schema} />
+<Layout title={`Profile - ${profile.name}`} canonical={canonicalURL} ogImage={ogImageURL}>
+    <script type="application/ld+json" set:html={schema} />
 
-	<main id="main-content">
-		<div class="profile-card">
-			<div class="banner">
-				<Image 
-					src={hauteSel} 
-					alt="Bannière représentative de l'entreprise Haute Sel" 
-					loading="eager" 
-					fetchpriority="high"
-					class="banner-img"
-				/>
-			</div>
+    <main id="main-content">
+        <div class="profile-card">
+            <div class="banner">
+                <Image 
+                    src={hauteSel} 
+                    alt={`Bannière représentative de l'entreprise ${profile.company}`} 
+                    loading="eager" 
+                    fetchpriority="high"
+                    class="banner-img"
+                />
+            </div>
 
-			<div class="main-content">
-				<div class="avatar-wrapper">
-					<Image 
-						src={llehuniPicture} 
-						alt="Photo de profil officielle de LaGrace Lehuni" 
-						class="avatar" 
-						loading="eager"
-					/>
-					<Image 
-						src={instagramBadge} 
-						alt="Badge de vérification officiel" 
-						loading="lazy"
-						class="verified-badge"
-					/>
+            <div class="main-content">
+                <div class="avatar-wrapper">
+                    <Image 
+                        src={llehuniPicture} 
+                        alt={`Photo de profil officielle de ${profile.name}`} 
+                        class="avatar" 
+                        loading="eager"
+                    />
+                    <Image 
+                        src={instagramBadge} 
+                        alt="Badge de vérification officiel" 
+                        loading="lazy"
+                        class="verified-badge"
+                    />
 
-					<div class="avatar-overlay">
-						<Image 
-							src={llehuniPicture} 
-							alt="Agrandissement du portrait de LaGrace Lehuni" 
-							loading="lazy"
-						/>
-					</div>
-				</div>
+                    <div class="avatar-overlay">
+                        <Image 
+                            src={llehuniPicture} 
+                            alt={`Agrandissement du portrait de ${profile.name}`} 
+                            loading="lazy"
+                        />
+                    </div>
+                </div>
 
-				<div class="profile-header">
-					<h1 class="user-name">LaGrace Lehuni <span class="star">★</span></h1>
-					<p class="user-role">Software Engineer <span>at</span> Haute Sel</p>
-				</div>
+                <div class="profile-header">
+                    <h1 class="user-name">{profile.name} <span class="star">★</span></h1>
+                    <p class="user-role">{profile.jobTitle} <span>at</span> {profile.company}</p>
+                </div>
 
-				<hr class="divider" />
+                <hr class="divider" />
 
-				<div class="about-section">
-					<h3>About</h3>
-					<p>
-						Software Engineer passionné par le code propre et efficace. 
-						Compétent dans la conception de solutions scalables répondant 
-						aux besoins métier. Toujours en apprentissage et à jour des 
-						tendances technologiques. Efficace en environnement collaboratif 
-						et motivé par de nouveaux défis.
-					</p>
-				</div>
+                <div class="about-section">
+                    <h3>About</h3>
+                    <p>
+                        Software Engineer passionné par le code propre et efficace. 
+                        Compétent dans la conception de solutions scalables répondant 
+                        aux besoins métier. Toujours en apprentissage et à jour des 
+                        tendances technologiques. Efficace en environnement collaboratif 
+                        et motivé par de nouveaux défis.
+                    </p>
+                </div>
 
-				<hr class="divider" />
+                <hr class="divider" />
 
-				<div class="skills-section">
+                <div class="skills-section">
 					<h3>Skills</h3>
 					<ul>
-						<li class="skill-item"><i class="fab fa-html5"></i> HTML</li>
-						<li class="skill-item"><i class="fab fa-css3-alt"></i> CSS</li>
-						<li class="skill-item"><i class="fab fa-js"></i> JavaScript</li>
-						<li class="skill-item"><i class="fab fa-react"></i> React</li>
-						<li class="skill-item"><i class="fab fa-angular"></i> Angular</li>
-						<li class="skill-item"><i class="fab fa-php"></i> PHP</li>
-						<li class="skill-item"><i class="fab fa-node-js"></i> Node.js</li>
-						<li class="skill-item"><i class="fab fa-python"></i> Python</li>
-						<li class="skill-item"><i class="fa fa-database"></i> SQL</li>
-						<li class="skill-item"><i class="fab fa-git"></i> Git</li>
+						{profile.skills.map((skill) => (
+							<li class="skill-item">
+								{/* On injecte directement la valeur de la map, avec une icône de code générique en fallback */}
+								<Icon name={iconMap[skill] || 'bx:bx-code-alt'} /> 
+								{skill}
+							</li>
+						))}
 					</ul>
 				</div>
 
-				<hr class="divider" />
+                <hr class="divider" />
 
-				<div class="info-links">
+                <div class="info-links">
 					<div class="info-item">
-						<i class="fa fa-location-dot"></i> Kinshasa, DRC
+						<Icon name="bx:bx-map" /> {profile.location.display}
 					</div>
 					<div class="info-item">
-						<i class="fab fa-linkedin"></i>{' '}
-						<a
-							href="https://www.linkedin.com/in/lagrace-lehuni-9366052a5"
-							class="info-link"
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label="Profil LinkedIn professionnel de LaGrace Lehuni (s'ouvre dans un nouvel onglet)"
-						>
+						<Icon name="bx:bxl-linkedin" />{' '}
+						<a href={profile.socials.linkedin} class="info-link" target="_blank" rel="noopener noreferrer">
 							in/lagrace-lehuni
 						</a>
 					</div>
 					<div class="info-item">
-						<i class="fab fa-github"></i>{' '}
-						<a
-							href="https://github.com/llehuni"
-							class="info-link"
-							target="_blank"
-							rel="noopener noreferrer"
-							aria-label="Profil GitHub de développeur de LaGrace Lehuni (s'ouvre dans un nouvel onglet)"
-						>
+						<Icon name="bx:bxl-github" />{' '}
+						<a href={profile.socials.github} class="info-link" target="_blank" rel="noopener noreferrer">
 							github/llehuni
 						</a>
 					</div>
 				</div>
-			</div>
-		</div>
+            </div>
+        </div>
 
-		<footer class="footer">
-			<p>&copy; {year} <strong>LaGrace Lehuni</strong>. All rights reserved.</p>
-		</footer>
-	</main>
+        <footer class="footer">
+            <p>&copy; {year} <strong>{profile.name}</strong>. All rights reserved.</p>
+        </footer>
+    </main>
 </Layout>
 
 <style lang="scss">
-	@use '../styles/abstracts' as *;
+    @use '../styles/abstracts' as *;
 
-	// Theme variables matching the original layout style.css
-	$profile-primary-blue: #0033ff;
-	$profile-secondary-blue: #031769;
-	$profile-text-dark: #1a1a1a;
-	$profile-text-gray: #666666;
-	$profile-border-color: #eeeeee;
-	$profile-bg-light: #f9f9f9;
+    $profile-primary-blue: #0033ff;
+    $profile-secondary-blue: #031769;
+    $profile-text-dark: #1a1a1a;
+    $profile-text-gray: #666666;
+    $profile-border-color: #eeeeee;
+    $profile-bg-light: #f9f9f9;
 
-	#main-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
-	.profile-card {
-		background: white;
-		width: calc(400px - 50px);
-		display: flex;
-		flex-direction: column;
-		border-radius: 15px;
-		overflow: hidden;
-		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-		border: 1px solid $profile-border-color;
+    #main-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .profile-card {
+        background: white;
+        width: calc(400px - 50px);
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid $profile-border-color;
 
-		@include respond-to('md') {
-			width: 400px;
-		}
-	}
+        @include respond-to('md') {
+            width: 400px;
+        }
+    }
 
-	.banner {
-		height: 160px;
-		margin: 5px;
-		border-radius: 10px;
-		overflow: hidden;
-		position: relative;
-		background-color: $profile-text-dark;
-		
+    .banner {
+        height: 160px;
+        margin: 5px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        background-color: $profile-text-dark;
+        
+        .banner-img {
+            background-color: $profile-secondary-blue;
+            overflow: hidden;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            height: 100%;
+            width: 100%;
 
-		.banner-img {
-			background-color: $profile-secondary-blue;
-			overflow: hidden;
-			display: none;
-			justify-content: center;
-			align-items: center;
-			border-radius: 10px;
-			height: 100%;
-			width: 100%;
+            img {
+                width: 100%;
+            }
+        }
+    }
 
-			img {
-				width: 100%;
-			}
-		}
-	}
+    .main-content {
+        padding: 20px 24px 30px;
+        position: relative;
+    }
 
-	.main-content {
-		padding: 20px 24px 30px;
-		position: relative;
-	}
+    .avatar-wrapper {
+        position: absolute;
+        top: -55px;
+        left: 24px;
+        cursor: pointer;
 
-	.avatar-wrapper {
-		position: absolute;
-		top: -55px;
-		left: 24px;
-		cursor: pointer;
+        .avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+        }
 
-		.avatar {
-			width: 90px;
-			height: 90px;
-			border-radius: 50%;
-			border: 4px solid white;
-			object-fit: cover;
-		}
+        .avatar-overlay {
+            position: fixed;
+            display: none;
+            width: 300px;
+            height: 300px;
+            padding: 5px;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid $profile-border-color;
+            border-radius: 10px;
+            animation: opacity ease 0.3s;
+            z-index: 100;
 
-		.avatar-overlay {
-			position: fixed;
-			display: none;
-			width: 300px;
-			height: 300px;
-			padding: 5px;
-			background: white;
-			overflow: hidden;
-			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-			border: 1px solid $profile-border-color;
-			border-radius: 10px;
-			animation: opacity ease 0.3s;
-			z-index: 100;
+            img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+                border-radius: 8px;
+            }
+        }
 
-			img {
-				object-fit: cover;
-				width: 100%;
-				height: 100%;
-				border-radius: 8px;
-			}
-		}
+        &:hover .avatar-overlay {
+            display: flex;
+        }
 
-		&:hover .avatar-overlay {
-			display: flex;
-		}
+        .verified-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            color: $profile-primary-blue;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
 
-		.verified-badge {
-			position: absolute;
-			bottom: 5px;
-			right: 5px;
-			color: $profile-primary-blue;
-			width: 25px;
-			height: 25px;
-			border-radius: 50%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 12px;
+            img {
+                object-fit: cover;
+                width: 100%;
+            }
+        }
+    }
 
-			img {
-				object-fit: cover;
-				width: 100%;
-			}
-		}
-	}
+    .profile-header {
+        margin-top: 45px;
 
-	.profile-header {
-		margin-top: 45px;
+        .user-name {
+            margin: 0;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: $profile-text-dark;
+            font-weight: 700;
 
-		.user-name {
-			margin: 0;
-			font-size: 22px;
-			display: flex;
-			align-items: center;
-			gap: 8px;
-			color: $profile-text-dark;
-			font-weight: 700;
+            .star {
+                color: orange;
+                font-size: 18px;
+            }
+        }
 
-			.star {
-				color: orange;
-				font-size: 18px;
-			}
-		}
+        .user-role {
+            color: $profile-text-gray;
+            font-size: 14px;
+            margin: 8px 0 20px;
+        }
+    }
 
-		.user-role {
-			color: $profile-text-gray;
-			font-size: 14px;
-			margin: 8px 0 20px;
-		}
-	}
+    .divider {
+        border: 0;
+        border-top: 1px dotted #ccc;
+        margin: 25px 0;
+    }
 
-	.divider {
-		border: 0;
-		border-top: 1px dotted #ccc;
-		margin: 25px 0;
-	}
+    .about-section {
+        h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: $profile-text-dark;
+            font-weight: 700;
+        }
 
-	.about-section {
-		h3 {
-			font-size: 14px;
-			margin-bottom: 12px;
-			color: $profile-text-dark;
-			font-weight: 700;
-		}
+        p {
+            font-size: 14px;
+            line-height: 1.5;
+            color: $profile-text-gray;
+            margin-bottom: 20px;
+        }
+    }
 
-		p {
-			font-size: 14px;
-			line-height: 1.5;
-			color: $profile-text-gray;
-			margin-bottom: 20px;
-		}
-	}
+    .skills-section {
+        h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: $profile-text-dark;
+            font-weight: 700;
+        }
 
-	.skills-section {
-		h3 {
-			font-size: 14px;
-			margin-bottom: 12px;
-			color: $profile-text-dark;
-			font-weight: 700;
-		}
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+        }
 
-		ul {
-			display: flex;
-			flex-wrap: wrap;
-			gap: 10px;
-			padding: 0;
-		}
+        .skill-item {
+            background: $profile-bg-light;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: $profile-text-gray;
+            display: flex;
+            align-items: center;
+            transition: box-shadow 0.3s ease;
 
-		.skill-item {
-			background: $profile-bg-light;
-			padding: 6px 12px;
-			border-radius: 20px;
-			font-size: 13px;
-			color: $profile-text-gray;
-			display: flex;
-			align-items: center;
-			transition: box-shadow 0.3s ease;
+            /* On cible le SVG généré par Astro-icon */
+            [data-icon] {
+                margin-right: 6px;
+                font-size: 16px; /* Les skill-icons rendent mieux un poil plus grands */
+            }
 
 			&:hover {
 				box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 				cursor: pointer;
+				color: #000000; /* Le texte ET l'icône passeront en bleu au survol */
+				
+				[data-icon] {
+					color: #000000;
+				}
 			}
+        }
+    }
 
-			i {
-				margin-right: 4px;
-				font-size: 12px;
-			}
-		}
-	}
+    .info-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        font-size: 14px;
+        color: $profile-text-gray;
 
-	.info-links {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		font-size: 14px;
-		color: $profile-text-gray;
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* On aère légèrement */
 
-		.info-item {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-		}
+            /* Cible les icônes Material Line */
+            [data-icon] {
+                font-size: 18px;
+                color: $profile-text-gray;
+            }
+        }
 
-		.info-link {
-			color: $profile-text-gray;
-			text-decoration: none;
-			transition: color 0.2s ease;
+        .info-link {
+            color: $profile-text-gray;
+            text-decoration: none;
+            transition: color 0.2s ease;
 
-			&:hover {
-				color: $profile-primary-blue;
-			}
-		}
-	}
+            &:hover {
+                color: $profile-primary-blue;
+            }
+        }
+    }
 
-	.footer {
-		margin-top: 30px;
-		text-align: center;
-		font-size: 12px;
-		color: $profile-text-gray;
+    .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 12px;
+        color: $profile-text-gray;
 
-		strong {
-			color: $profile-text-dark;
-		}
-	}
+        strong {
+            color: $profile-text-dark;
+        }
+    }
 
-	@keyframes opacity {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
+    @keyframes opacity {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
 </style>
 
 <style is:global lang="scss">
-	body {
-		background-color: #f1f0f0 !important;
-		color: #0a1a1a !important;
-		margin: 0;
-		padding: 40px 20px;
-		font-family: 'Figtree', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-	}
+    body {
+        background-color: #f1f0f0 !important;
+        color: #0a1a1a !important;
+        margin: 0;
+        padding: 40px 20px;
+        font-family: 'Figtree', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
 </style>
-

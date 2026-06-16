@@ -1,0 +1,25 @@
+---
+// src/components/core/GoogleFont.astro
+
+export interface Props {
+  family: string;
+  weights?: string;
+}
+
+const { family = 'Figtree', weights = '300..900' } = Astro.props;
+
+// Formatage de l'URL
+const formattedFamily = family.trim().replace(/\s+/g, '+');
+const fontUrl = `https://fonts.googleapis.com/css2?family=${formattedFamily}:ital,wght@0,${weights};1,${weights}&display=swap`;
+---
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<link href={fontUrl} rel="stylesheet" />
+
+<style define:vars={{ fontFamily: `'${family}', sans-serif` }}>
+  :global(:root) {
+    --font-primary: var(--fontFamily);
+  }
+</style>
