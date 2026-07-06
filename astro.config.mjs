@@ -6,6 +6,6 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-    "site": "https://llehuni-portfolio.vercel.app",
+    "site": "https://lagracelehuni.vercel.app",
     integrations: [sitemap(), icon()]
 });
